@@ -1,10 +1,9 @@
 u have mail
 ===========
 
-uhm is a tiny C program, originally written in 45 lines of code,
-that plays a WAV encoded audio file, using OpenBSD's aucat(1)
-utility, whenever new mail arrives to the user's system mailbox,
-usually /var/mail/user.
+uhm is a tiny C program, originally written in 45 lines of code, that plays a
+WAV encoded audio file, using OpenBSD's aucat(1) utility, whenever new mail
+arrives to the user's system mailbox, usually /var/mail/user.
 
 The program was intended to be a primitive solution for a sudden idea that came
 to mind. It works and it does what I need it to do on my system. If I need
@@ -31,3 +30,10 @@ Run
     $ uhm
 
 It's best to launch this automatically at boot time from a Unix rc.d(8) script.
+
+The audio file I use on my system for this can be retrieved from satorii.org's
+gopherhole in any of the following ways:
+
+    $ sacc satorii.org/9/audio/mail.wav
+    $ curl gopher://satorii.org/9/audio/mail.wav
+    $ echo "/audio/mail.wav" | nc satorii.org 70
