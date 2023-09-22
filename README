@@ -34,6 +34,6 @@ It's best to launch this automatically at boot time from a Unix rc.d(8) script.
 The audio file I use on my system for this can be retrieved from satorii.org's
 gopherhole in any of the following ways:
 
-    $ sacc satorii.org/9/audio/mail.wav
-    $ curl gopher://satorii.org/9/audio/mail.wav
-    $ echo "/audio/mail.wav" | nc satorii.org 70
+    $ sacc satorii.org/9/audio/mail.wav >mail.wav
+    $ curl gopher://satorii.org/9/audio/mail.wav >mail.wav
+    $ echo "/audio/mail.wav" | nc satorii.org 70 >mail.wav
