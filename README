@@ -1,8 +1,8 @@
 u have mail
 ===========
 
-uhm is a tiny C daemon, originally written in 45 lines of code, that plays a
-sound whenever new mail arrives.
+uhm is a tiny C daemon, written in 50 lines of code, that plays a sound
+whenever new mail arrives.
 
 By default uhm uses OpenBSD's aucat(1) utility to playback the specified audio
 file whenever the specified user's system mailbox grows in size. Realistically,
