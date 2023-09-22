@@ -13,6 +13,7 @@ static void play(void)
     char *cmd[] = { "aucat", "-i", aud, NULL };
 
     if (fork() == 0) {
+        setsid();
         signal(SIGCHLD, SIG_DFL);
         execvp(cmd[0], cmd);
         err(1, "execvp");
