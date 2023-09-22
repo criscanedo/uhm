@@ -1,5 +1,6 @@
 #include <time.h>
 #include <unistd.h>
+#include <signal.h>
 #include <err.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -12,6 +13,7 @@ static void play(void)
     char *cmd[] = { "aucat", "-i", aud, NULL };
 
     if (fork() == 0) {
+        signal(SIGCHLD, SIG_DFL);
         execvp(cmd[0], cmd);
         err(1, "execvp");
     }
@@ -27,6 +29,8 @@ int main(void)
         err(1, "%s", mbox);
     if (access(aud, F_OK) == -1)
         err(1, "%s", aud);
+
+    signal(SIGCHLD, SIG_IGN);
 
     if (stat(mbox, &st1) == -1)
         err(1, "%s", mbox);
