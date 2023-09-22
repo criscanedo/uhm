@@ -1,0 +1,33 @@
+u have mail
+===========
+
+uhm is a tiny C program, originally written in 45 lines of code,
+that plays a WAV encoded audio file, using OpenBSD's aucat(1)
+utility, whenever new mail arrives to the user's system mailbox,
+usually /var/mail/user.
+
+The program was intended to be a primitive solution for a sudden idea that came
+to mind. It works and it does what I need it to do on my system. If I need
+anything more, I'll add it. If you need anything more, you'll add it. The
+program does not process any arguments or options supplied by the user to
+specify which mailbox to monitor or which audio file to play. This was
+intentional so as to encourage new programmers to hack the source themselves
+and point the program to the correct files on their system. It also serves as
+an exercise to implement option processing with getopt(3). Either way, a patch
+will be provided alongside the source to be quickly applied for this
+functionality.
+
+Install
+-------
+
+Be sure you change `mbox` and `aud` to appropriate paths in uhm.c.
+
+    $ make
+    # make install
+
+Run
+---
+
+    $ uhm
+
+It's best to launch this automatically at boot time from a Unix rc.d(8) script.
