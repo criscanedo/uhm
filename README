@@ -1,7 +1,7 @@
 u have mail
 ===========
 
-uhm is a tiny C daemon, written in 50 lines of code, that plays a sound
+uhm is a tiny C daemon, written in 50 lines of code, that plays an audio file
 whenever new mail arrives.
 
 By default uhm uses OpenBSD's aucat(1) utility to playback the specified audio
@@ -16,9 +16,17 @@ uhm does not process any options or arguments so as to encourage the new
 programmer to hack the program themselves to specify which mailbox to watch,
 which audio file to play, and even which audio utility to use. This can all be
 changed in a few keystrokes. The ambitious newbie programmer may even take this
-opportunity to implement use of getopt(3). I will, however, be providing a
-patch alongside the source that carries this functionality, namely specifying a
-mailbox, audio file, and interval as options.
+opportunity to implement use of getopt(3).
+
+I have, however, provided a patch alongside the source that contains this
+functionality, namely options to specify a mailbox, audio file, and the
+interval, in milliseconds, at which uhm checks the mailbox for new mail. The
+default interval is 1/10 of a second (100 ms).
+
+The patch was generated with git-format-patch(1) and can therefore be applied
+with git-am(1):
+
+    $ git am getopt.diff
 
 Install
 -------

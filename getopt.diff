@@ -1,0 +1,96 @@
+From fc36d682d8319addf6498cbb6cf9967a84010f2d Mon Sep 17 00:00:00 2001
+From: Cristian Canedo <ccanedo@satorii.org>
+Date: Sat, 23 Sep 2023 17:46:00 -0500
+Subject: [PATCH] Implement m, f, and i options to supply mailbox, audio file,
+ and interval in milliseconds, respectively.
+
+---
+ uhm.c | 43 +++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 35 insertions(+), 8 deletions(-)
+
+diff --git a/uhm.c b/uhm.c
+index 9fcf5ac..fff96f9 100644
+--- a/uhm.c
++++ b/uhm.c
+@@ -1,14 +1,13 @@
+ #include <time.h>
+ #include <unistd.h>
++#include <stdio.h>
++#include <stdlib.h>
+ #include <signal.h>
+ #include <err.h>
+ #include <sys/stat.h>
+ #include <sys/wait.h>
+ 
+-static char *mbox = "/var/mail/user";
+-static char *aud = "/mnt/aud/sounds/mail.wav";
+-
+-static void play(void)
++static void play(char *aud)
+ {
+     char *cmd[] = { "aucat", "-i", aud, NULL };
+ 
+@@ -21,28 +20,56 @@ static void play(void)
+     wait(NULL);
+ }
+ 
+-int main(void)
++static void usage(void)
++{
++    fprintf(stderr, "usage: uhm -m <mailbox> -f <audiofile> [-i <milliseconds>]\n");
++    exit(1);
++}
++
++int main(int argc, char *argv[])
+ {
++    int opt, mflag = 0, fflag = 0, ms = 100;
++    char *mbox = NULL, *aud = NULL;
+     struct stat st1, st2;
+-    struct timespec delay = { 0, 50000000 };
++    struct timespec delay = { 0, ms };
+ 
++    while ((opt = getopt(argc, argv, "m:f:i:")) != -1) {
++        switch (opt) {
++        case 'm': mbox = optarg; mflag = 1; break;
++        case 'f': aud = optarg; fflag = 1; break;
++        case 'i': ms = atoi(optarg); break;
++        default: usage(); break;
++        }
++    }
++
++    if (mflag != 1 || fflag != 1)
++        usage();
+     if (access(mbox, F_OK) == -1)
+         err(1, "%s", mbox);
+     if (access(aud, F_OK) == -1)
+         err(1, "%s", aud);
++    if (ms == 0)
++        ms = 100;
+ 
+     signal(SIGCHLD, SIG_IGN);
+ 
++    if (ms >= 1000) {
++        delay.tv_sec = ms / 1000;
++        delay.tv_nsec = 0;
++    } else {
++        delay.tv_nsec = ms * 1000000;
++    }
++
+     if (stat(mbox, &st1) == -1)
+         err(1, "%s", mbox);
+     if (st1.st_size > 0)
+-        play();
++        play(aud);
+ 
+     for (;;) {
+         if (stat(mbox, &st2) == -1)
+             err(1, "%s", mbox);
+         if (st2.st_size > st1.st_size)
+-            play();
++            play(aud);
+         st1 = st2;
+         nanosleep(&delay, NULL);
+     }
+-- 
+2.37.3
+
