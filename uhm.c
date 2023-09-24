@@ -24,7 +24,7 @@ static void play(void)
 int main(void)
 {
     struct stat st1, st2;
-    struct timespec delay = { 0, 50000000 };
+    struct timespec delay = { 0, 100000000 };
 
     if (access(mbox, F_OK) == -1)
         err(1, "%s", mbox);

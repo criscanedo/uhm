@@ -1,15 +1,15 @@
-From fc36d682d8319addf6498cbb6cf9967a84010f2d Mon Sep 17 00:00:00 2001
+From 33c1ee3e2b8120468253439a9e94db58b7a76aa8 Mon Sep 17 00:00:00 2001
 From: Cristian Canedo <ccanedo@satorii.org>
-Date: Sat, 23 Sep 2023 17:46:00 -0500
-Subject: [PATCH] Implement m, f, and i options to supply mailbox, audio file,
+Date: Sat, 23 Sep 2023 23:02:36 -0500
+Subject: [PATCH] Implement m, f, and i options to specify mailbox, audio file,
  and interval in milliseconds, respectively.
 
 ---
- uhm.c | 43 +++++++++++++++++++++++++++++++++++--------
- 1 file changed, 35 insertions(+), 8 deletions(-)
+ uhm.c | 39 +++++++++++++++++++++++++++++++--------
+ 1 file changed, 31 insertions(+), 8 deletions(-)
 
 diff --git a/uhm.c b/uhm.c
-index 9fcf5ac..fff96f9 100644
+index 9fcf5ac..5e72345 100644
 --- a/uhm.c
 +++ b/uhm.c
 @@ -1,14 +1,13 @@
@@ -30,7 +30,7 @@ index 9fcf5ac..fff96f9 100644
  {
      char *cmd[] = { "aucat", "-i", aud, NULL };
  
-@@ -21,28 +20,56 @@ static void play(void)
+@@ -21,28 +20,52 @@ static void play(void)
      wait(NULL);
  }
  
@@ -69,12 +69,8 @@ index 9fcf5ac..fff96f9 100644
  
      signal(SIGCHLD, SIG_IGN);
  
-+    if (ms >= 1000) {
-+        delay.tv_sec = ms / 1000;
-+        delay.tv_nsec = 0;
-+    } else {
-+        delay.tv_nsec = ms * 1000000;
-+    }
++    delay.tv_sec = ms / 1000;
++    delay.tv_nsec = (ms % 1000) * 1000000;
 +
      if (stat(mbox, &st1) == -1)
          err(1, "%s", mbox);

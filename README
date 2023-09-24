@@ -6,8 +6,7 @@ whenever new mail arrives.
 
 By default uhm uses OpenBSD's aucat(1) utility to playback the specified audio
 file whenever the specified user's system mailbox grows in size. Realistically,
-any file can be watched for growth it doesn't have to be a mailbox, though this
-is what I use it for and why I wrote it.
+any file can be watched for growth it doesn't have to be a mailbox.
 
 Configuration
 -------------
@@ -18,12 +17,12 @@ which audio file to play, and even which audio utility to use. This can all be
 changed in a few keystrokes. The ambitious newbie programmer may even take this
 opportunity to implement use of getopt(3).
 
-I have, however, provided a patch alongside the source that contains this
+Regardless, I have provided a patch alongside the source that contains this
 functionality, namely options to specify a mailbox, audio file, and the
 interval, in milliseconds, at which uhm checks the mailbox for new mail. The
 default interval is 1/10 of a second (100 ms).
 
-The patch was generated with git-format-patch(1) and can therefore be applied
+The patch was generated using git-format-patch(1) and can therefore be applied
 with git-am(1):
 
     $ git am getopt.diff
