@@ -1,5 +1,8 @@
 PREFIX = /usr/local
-MANPREFIX = ${PREFIX}/man
+MANPREFIX = ${PREFIX}/share/man
+
+# OpenBSD
+#MANPREFIX = ${PREFIX}/man
 
 SRC = uhm.c
 OBJ = ${SRC:.c=.o}
@@ -19,8 +22,12 @@ install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
 	cp -f uhm ${DESTDIR}${PREFIX}/bin
 	chmod 755 ${DESTDIR}${PREFIX}/bin/uhm
+	mkdir -p ${DISTDIR}${MANPREFIX}/man1
+	cp -f uhm.1 ${DESTDIR}${MANPREFIX}/man1
+	chmod 644 ${DESTIDR}${MANPREFIX}/man1/uhm.1
 
 uninstall:
-	rm -f ${DESTDIR}${PREFIX}/bin/uhm
+	rm -f ${DESTDIR}${PREFIX}/bin/uhm\
+		${DESTDIR}${MANPREFIX}/man1/uhm.1
 
 .PHONY: all clean install uninstall

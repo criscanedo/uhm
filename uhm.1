@@ -1,0 +1,36 @@
+.Dd $Mdocdate$
+.Dt UHM 1
+.Os
+.Sh NAME
+.Nm uhm
+.Nd play audio when mail arrives
+.Sh SYNPOSIS
+.Nm uhm
+.Fl m Ar mailbox
+.Fl f Ar file
+.Op Fl i Ar delay
+.Sh DESCRIPTION
+.Nm
+(u have mail) is a tiny daemon that plays an audio file whenever new mail
+arrives in
+.Ar mailbox .
+.Pp
+By default,
+.Xr aucat 1
+is used as the audio playback utility.
+.Pp
+.Nm
+simply watches
+.Ar mailbox
+for growth in size. Realistically, any file can be watched for new data, it
+doesn't need to be a mailbox.
+.Pp
+The options are as follows:
+.Bl -tag -width Ds
+.It Fl i Ar delay
+Specify the file watch interval in milliseconds.
+.It Fl f Ar file
+Play this audio file when new mail arrives.
+.It Fl m Ar mailbox
+Watch this mailbox file for new mail.
+.El
