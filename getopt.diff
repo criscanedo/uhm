@@ -1,6 +1,6 @@
-From 67bbdddb283faa4eace913fb73d2984681705fe6 Mon Sep 17 00:00:00 2001
+From 9819b4d27fcd767871c4f9b4ee32e02fe785563c Mon Sep 17 00:00:00 2001
 From: Cristian Canedo <ccanedo@satorii.org>
-Date: Sun, 24 Sep 2023 21:31:22 -0500
+Date: Mon, 25 Sep 2023 14:05:58 -0500
 Subject: [PATCH] Implement program options
 
 ---
@@ -8,7 +8,7 @@ Subject: [PATCH] Implement program options
  1 file changed, 31 insertions(+), 8 deletions(-)
 
 diff --git a/uhm.c b/uhm.c
-index 9fcf5ac..faee891 100644
+index 9fcf5ac..908109f 100644
 --- a/uhm.c
 +++ b/uhm.c
 @@ -1,14 +1,13 @@
@@ -36,7 +36,7 @@ index 9fcf5ac..faee891 100644
 -int main(void)
 +static void usage(void)
 +{
-+    fprintf(stderr, "usage: uhm -m <mailbox> -f <audiofile> [-i <milliseconds>]\n");
++    fprintf(stderr, "usage: uhm -m mailbox -f file [-i delay]\n");
 +    exit(1);
 +}
 +
