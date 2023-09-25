@@ -1,15 +1,14 @@
-From 33c1ee3e2b8120468253439a9e94db58b7a76aa8 Mon Sep 17 00:00:00 2001
+From 67bbdddb283faa4eace913fb73d2984681705fe6 Mon Sep 17 00:00:00 2001
 From: Cristian Canedo <ccanedo@satorii.org>
-Date: Sat, 23 Sep 2023 23:02:36 -0500
-Subject: [PATCH] Implement m, f, and i options to specify mailbox, audio file,
- and interval in milliseconds, respectively.
+Date: Sun, 24 Sep 2023 21:31:22 -0500
+Subject: [PATCH] Implement program options
 
 ---
  uhm.c | 39 +++++++++++++++++++++++++++++++--------
  1 file changed, 31 insertions(+), 8 deletions(-)
 
 diff --git a/uhm.c b/uhm.c
-index 9fcf5ac..5e72345 100644
+index 9fcf5ac..faee891 100644
 --- a/uhm.c
 +++ b/uhm.c
 @@ -1,14 +1,13 @@
@@ -47,7 +46,7 @@ index 9fcf5ac..5e72345 100644
 +    char *mbox = NULL, *aud = NULL;
      struct stat st1, st2;
 -    struct timespec delay = { 0, 50000000 };
-+    struct timespec delay = { 0, ms };
++    struct timespec delay = { 0, ms * 1000000 };
  
 +    while ((opt = getopt(argc, argv, "m:f:i:")) != -1) {
 +        switch (opt) {
