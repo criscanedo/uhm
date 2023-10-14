@@ -1,25 +1,28 @@
-From 9819b4d27fcd767871c4f9b4ee32e02fe785563c Mon Sep 17 00:00:00 2001
-From: Cristian Canedo <ccanedo@satorii.org>
-Date: Mon, 25 Sep 2023 14:05:58 -0500
-Subject: [PATCH] Implement program options
+From 1bc6fab60b08ae9f26df39ce135d4a0004675415 Mon Sep 17 00:00:00 2001
+From: Cristian Canedo <ccanedo@mailbox.org>
+Date: Sat, 14 Oct 2023 12:06:02 -0500
+Subject: [PATCH] getopt
 
 ---
- uhm.c | 39 +++++++++++++++++++++++++++++++--------
- 1 file changed, 31 insertions(+), 8 deletions(-)
+ uhm.c | 45 ++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 34 insertions(+), 11 deletions(-)
 
 diff --git a/uhm.c b/uhm.c
-index 9fcf5ac..908109f 100644
+index 53413a3..9b31a6d 100644
 --- a/uhm.c
 +++ b/uhm.c
 @@ -1,14 +1,13 @@
- #include <time.h>
- #include <unistd.h>
+-#include <time.h>
+-#include <unistd.h>
+-#include <signal.h>
+ #include <err.h>
++#include <signal.h>
 +#include <stdio.h>
 +#include <stdlib.h>
- #include <signal.h>
- #include <err.h>
  #include <sys/stat.h>
  #include <sys/wait.h>
++#include <time.h>
++#include <unistd.h>
  
 -static char *mbox = "/var/mail/user";
 -static char *aud = "/mnt/aud/sounds/mail.wav";
@@ -35,29 +38,29 @@ index 9fcf5ac..908109f 100644
  
 -int main(void)
 +static void usage(void)
-+{
-+    fprintf(stderr, "usage: uhm -m mailbox -f file [-i delay]\n");
+ {
++    fprintf(stderr, "usage: uhm [-i delay] -f file -m mailbox\n");
 +    exit(1);
 +}
 +
 +int main(int argc, char *argv[])
- {
++{
 +    int opt, mflag = 0, fflag = 0, ms = 100;
 +    char *mbox = NULL, *aud = NULL;
      struct stat st1, st2;
--    struct timespec delay = { 0, 50000000 };
+-    struct timespec delay = { 0, 100000000 };
 +    struct timespec delay = { 0, ms * 1000000 };
  
-+    while ((opt = getopt(argc, argv, "m:f:i:")) != -1) {
++    while ((opt = getopt(argc, argv, "i:f:m:")) != -1) {
 +        switch (opt) {
-+        case 'm': mbox = optarg; mflag = 1; break;
-+        case 'f': aud = optarg; fflag = 1; break;
 +        case 'i': ms = atoi(optarg); break;
++        case 'f': aud = optarg; fflag = 1; break;
++        case 'm': mbox = optarg; mflag = 1; break;
 +        default: usage(); break;
 +        }
 +    }
 +
-+    if (mflag != 1 || fflag != 1)
++    if (!mflag || !fflag)
 +        usage();
      if (access(mbox, F_OK) == -1)
          err(1, "%s", mbox);

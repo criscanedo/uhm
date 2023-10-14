@@ -1,9 +1,9 @@
-#include <time.h>
-#include <unistd.h>
-#include <signal.h>
 #include <err.h>
+#include <signal.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
 
 static char *mbox = "/var/mail/user";
 static char *aud = "/mnt/aud/sounds/mail.wav";
