@@ -22,9 +22,9 @@ install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
 	cp -f uhm ${DESTDIR}${PREFIX}/bin
 	chmod 755 ${DESTDIR}${PREFIX}/bin/uhm
-	mkdir -p ${DISTDIR}${MANPREFIX}/man1
+	mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	cp -f uhm.1 ${DESTDIR}${MANPREFIX}/man1
-	chmod 644 ${DESTIDR}${MANPREFIX}/man1/uhm.1
+	chmod 644 ${DESTDIR}${MANPREFIX}/man1/uhm.1
 
 uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/uhm\
