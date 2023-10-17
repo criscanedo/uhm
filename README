@@ -30,6 +30,18 @@ with git-am(1):
 Install
 -------
 
+git:
+
+    $ git clone https://git.sr.ht/~hackexe/uhm
+    $ cd uhm
+    $ make
+    # make install
+
+tarball:
+
+    $ curl -O gopher://satorii.org/9/src/uhm.tar.gz
+    $ tar -xzvf uhm.tar.gz
+    $ cd tar
     $ make
     # make install
 

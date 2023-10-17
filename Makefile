@@ -16,7 +16,15 @@ uhm: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
-	rm -f uhm ${OBJ}
+	rm -rf uhm ${OBJ} uhm.tar.gz
+
+dist: clean
+	mkdir uhm
+	cp LICENSE Makefile README getopt.diff\
+		uhm.1 uhm.c uhm.rc uhm
+	tar -cf uhm.tar uhm
+	gzip uhm.tar
+	rm -rf uhm
 
 install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
@@ -30,4 +38,4 @@ uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/uhm\
 		${DESTDIR}${MANPREFIX}/man1/uhm.1
 
-.PHONY: all clean install uninstall
+.PHONY: all clean dist install uninstall
